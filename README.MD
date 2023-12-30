@@ -14,6 +14,7 @@ git add .
 '''git commit -m "this is my first commit"
 '''
 
+
 '''
 git pull
 '''
@@ -32,3 +33,5 @@ python setup.py install
 '''
 pip install -r requirements.txt
 '''
+
+
