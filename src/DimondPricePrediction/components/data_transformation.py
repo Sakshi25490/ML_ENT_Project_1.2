@@ -12,12 +12,12 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OrdinalEncoder,StandardScaler
 
-from src.DimondPricePrediction.utils import save_object
+from src.DimondPricePrediction.utils.utils import save_object
 
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join('artifacts','preprocessor.pk1')
+    preprocessor_obj_file_path = os.path.join('artifacts','preprocessor.pkl')
 
 
 
@@ -99,6 +99,9 @@ class DataTransformation:
             input_feature_train_df = train_df.drop(columns=drop_columns,axis=1)
             target_feature_train_df = train_df[target_column_name]
             
+            input_feature_test_df=test_df.drop(columns=drop_columns,axis=1)
+            target_feature_test_df=test_df[target_column_name]
+            
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_arr)
@@ -106,12 +109,23 @@ class DataTransformation:
             
             logging.info("Applying preprocessing objects on training and testing datasets.")
             
+            train_arr = np.c_[input_feature_train_arr,np.array(target_feature_train_df)]
+            test_arr = np.c_[input_feature_test_arr,np.array(target_feature_test_df)]
+            
             
             save_object(
                 file_path=self.data_transfomration_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
             )
             
+    
+            
+            logging.info("preprocessing pickle file saved")
+            
+            return (
+                train_arr,
+                test_arr
+            )
      
         except Exception as e:
  
