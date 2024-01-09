@@ -6,4 +6,5 @@ seaborn
 Flask
 
 -e .
-
+mlflow
+dvc
