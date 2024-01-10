@@ -5,6 +5,6 @@ ipykernel
 seaborn
 Flask
 
--e .
+#-e .
 mlflow
 dvc
